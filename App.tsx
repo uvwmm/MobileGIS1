@@ -23,11 +23,6 @@ const HelloWorldApp = () => {
       }}>
       <Text>Hello, world!</Text>
       <Buttoncomponent />
-      
-      <Button
-        title="Request Location Permission"
-        onPress={requestLocationPermission} 
-      />
     </View>
     
 
