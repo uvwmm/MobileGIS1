@@ -8,6 +8,7 @@
 import React from 'react';
 import {Button, Text, View} from 'react-native';
 import Buttoncomponent from './components/Button';
+import Geolocation from 'react-native-geolocation-service';
 
 
 const HelloWorldApp = () => {
