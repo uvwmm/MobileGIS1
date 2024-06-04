@@ -7,11 +7,13 @@
 
 import React from 'react';
 import {Button, Text, View} from 'react-native';
-import Buttoncomponent from './components/Button';
+import {Buttoncomponent, requestLocationPermission} from './components/Button';
 import Geolocation from 'react-native-geolocation-service';
+import { PermissionsAndroid } from 'react-native';
 
 
 const HelloWorldApp = () => {
+
   return (
     <View
       style={{
@@ -21,11 +23,17 @@ const HelloWorldApp = () => {
       }}>
       <Text>Hello, world!</Text>
       <Buttoncomponent />
+      
+      <Button
+        title="Request Location Permission"
+        onPress={requestLocationPermission} 
+      />
     </View>
     
 
   );
 };
+
 
 
 export default HelloWorldApp;
