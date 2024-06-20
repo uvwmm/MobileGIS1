@@ -1,8 +1,10 @@
 
 import {StyleSheet, View, Text, Button, PermissionsAndroid} from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation, { GeoPosition } from 'react-native-geolocation-service';
 import React, {useState} from 'react';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+
+
+//import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 
 const styles = StyleSheet.create({
@@ -20,7 +22,7 @@ const Buttoncomponent = () => {
       <Text>Welcome!</Text>
       <View
         style={{marginTop: 10, padding: 10, borderRadius: 10, width: '40%'}}>
-        <Button title="Get Location" onPress={requestLocationPermission}/>
+        <Button title="Get Location" onPress={getLocation}/>
       </View>
       <Text>Latitude: </Text>
       <Text>Longitude: </Text>
@@ -28,11 +30,14 @@ const Buttoncomponent = () => {
         style={{marginTop: 10, padding: 10, borderRadius: 10, width: '40%'}}>
         <Button title="Send Location" />
       </View>
+      <View
+        style={{marginTop: 10, padding: 10, borderRadius: 10, width: '40%'}}>
+        <Button title="Testbutton" onPress={requestLocationPermission}/>
+      </View>
     </View>
   );
 }
-  // state to hold location
-  const [location, setLocation] = useState(false);
+ 
 
 // Function to get permission for location
 const requestLocationPermission = async () => {
@@ -60,28 +65,108 @@ const requestLocationPermission = async () => {
   }
 };
 
-  /* function to check permissions and get Location
-  const getLocation = () => {
-    const result = requestLocationPermission();
+  /*  
+  // function to check permissions and get Location
+const getLocation = () => {
+      // state to hold location
+ // const [location, setLocation] = useState(false);
+  const result = requestLocationPermission();
+    
     result.then(res => {
       console.log('res is:', res);
+      
       if (res) {
+        console.log('Getting location');
+       
         Geolocation.getCurrentPosition(
+        
           position => {
             console.log(position);
             setLocation(position);
+
+            console.log('Latitude: ', position.coords.latitude);
+            console.log('Longitude: ', position.coords.longitude);  
+            console.log(setLocation)
           },
           error => {
-            // See error code charts below.
             console.log(error.code, error.message);
-            setLocation(false);
+            setLocation(null);
           },
           {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
         );
-      }
-    });
-    console.log(location);
-  };
-  */
+        
+       //Geolocation.getCurrentPosition(info => console.log(info));
 
-export {Buttoncomponent, requestLocationPermission};
+       console.log('reached that Point')
+      }
+      console.log('reached that Point1')
+    })
+    console.log('reached that Point2')
+    console.log('location is:', location);
+  };
+*/  
+//write a method that can get the coordinates out of the Geolocation API and return them to the caller and store them in a state variable
+
+
+
+
+/*
+//Function to get location
+ const getLocation = () => {
+   Geolocation.getCurrentPosition(
+     position => {
+       console.log(position);
+       console.log('Latitude: ', position.coords.latitude);
+       console.log('Longitude: ', position.coords.longitude);
+       handleCoordinates(latitude, longitude);
+      },
+        error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  );
+};
+*/
+// Function to send location	
+// const sendLocation = () => {
+//   // Code to send location
+// };
+
+
+const getLocation = () => {
+  Geolocation.getCurrentPosition(
+    position => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      console.log('Latitude: ', latitude);
+      console.log('Longitude: ', longitude);
+
+      // Sie können die Variablen hier weiter verwenden oder speichern
+      // Beispiel: Weitergabe an eine andere Funktion
+      handleCoordinates(latitude, longitude);
+    },
+    error => {
+      console.log(error.code, error.message);
+    },
+    {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  );
+};
+
+
+// Declare state variables for latitude and longitude
+const [latitude, setLatitude] = useState<number | null>(null);
+const [longitude, setLongitude] = useState<number | null>(null);
+
+const handleCoordinates = (lat: number, lon: number) => {
+  // Update state variables
+  setLatitude(lat);
+  setLongitude(lon);
+
+  // Log the new values
+  console.log('Stored Latitude: ', latitude);
+  console.log('Stored Longitude: ', longitude);
+};
+
+
+export {Buttoncomponent, requestLocationPermission, getLocation};
